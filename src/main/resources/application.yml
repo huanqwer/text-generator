@@ -1,3 +1,6 @@
 server:
   port: 80
 url: http://m.diyiziti.com/shouxie
+canvas:
+  width: 1440
+  height: 2050
