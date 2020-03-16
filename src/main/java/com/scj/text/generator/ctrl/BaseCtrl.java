@@ -18,8 +18,8 @@ public class BaseCtrl {
     BaseService baseService;
 
     @PostMapping(value = "text")
-    public String test(String text,String color,HttpServletResponse response) throws Exception {
-        baseService.test(text,color);
+    public String test(String title,String text,String color,HttpServletResponse response) throws Exception {
+        baseService.text(title,text,color);
         return null;
     }
 
