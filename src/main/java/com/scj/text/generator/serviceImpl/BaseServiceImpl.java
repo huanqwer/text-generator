@@ -36,6 +36,8 @@ public class BaseServiceImpl implements BaseService {
         BufferedImage image = new BufferedImage(canvasWidth,canvasHeight,BufferedImage.TYPE_INT_RGB);
         File file = new File("D:\\img-output\\img"+pageNum+".png");
         if(!file.exists()){//没有则创建
+            File folder = new File("D:\\img-output");
+            folder.mkdir();//创建文件夹
             file.createNewFile();
         }
         //创建输出流
@@ -46,7 +48,11 @@ public class BaseServiceImpl implements BaseService {
         g.fillRect(0,0,canvasWidth,canvasHeight);
         //画标题
         //算出起笔位置
-        int beginX = canvasWidth-FONT_SIZE*(title.length());
+        int beginX = (canvasWidth-FONT_SIZE*(title.length()))/2;
+        if(beginX<0){
+            System.out.println("标题超限,自动移到行首");
+            beginX = 0;
+        }
         System.out.println("起笔位置为："+beginX);
         //创建随机数
         Random random = new Random();
@@ -75,7 +81,7 @@ public class BaseServiceImpl implements BaseService {
             beginX+=FONT_SIZE/2;
         }
         int x = 0;
-        int y = (FONT_SIZE/2+20);
+        int y = "".equals(title)?10:(FONT_SIZE/2+20);
         //将正文字符串拆分
         for(int i=0;i<text.length();i++){
             char c = text.charAt(i);
@@ -84,6 +90,19 @@ public class BaseServiceImpl implements BaseService {
                 System.out.println("遇到换行符！");
                 x = 0;
                 y += (FONT_SIZE/2+10);
+                //换纸
+                if(y+FONT_SIZE>canvasHeight){
+                    pageNum++;
+                    //释放资源
+                    g.dispose();
+                    JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+                    encoder.encode(image);
+                    //关闭流
+                    out.close();
+                    System.out.println("完成!");
+                    text("",text.substring(i+1),color);
+                    return;
+                }
                 continue;
             }
             String str = c+"";
@@ -143,7 +162,7 @@ public class BaseServiceImpl implements BaseService {
                     //关闭流
                     out.close();
                     System.out.println("完成!");
-                    text("",text.substring(i),color);
+                    text("",text.substring(i+1),color);
                     return;
                 }
             }
