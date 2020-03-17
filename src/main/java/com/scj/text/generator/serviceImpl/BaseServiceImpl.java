@@ -26,7 +26,7 @@ public class BaseServiceImpl implements BaseService {
     int canvasHeight;
 
     private final int[] FONT_LIST = {455,464,465,81};//预设字体列表
-    private final int FONT_SIZE = 60;//预设字体大小
+    private final int FONT_SIZE = 36;//预设字体大小
 
     private static int pageNum = 0;//当前页数
 
