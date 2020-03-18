@@ -31,7 +31,7 @@ public class TextToImg {
     @Value("${url}")
     String url;
     /**
-     * @Author 覃岭
+     * @Author LaoQin
      * @Description //TODO 将文字转成手写文字并返回
      * @Date 22:47 2020/03/15
      * @Param [text] 要转写的文字
